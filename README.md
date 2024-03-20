@@ -1,4 +1,4 @@
-# Image Analysis with Hough Transformation
+# Image Analysis with Hough Transformation for GP2
 
 This repository contains tools and data for analyzing images with a focus on detecting spherical structures using the Hough Transformation. The repository is structured into two main directories: `data` and `src`.
 
@@ -15,7 +15,7 @@ This directory hosts two types of files:
 
 Contains the source code for image analysis. The scripts are designed to apply the Hough Transformation to the provided images in order to detect and analyze spherical structures. These scripts are capable of processing the raw data found in the `data` directory and outputting their findings in a structured format for further analysis or visualization.
 
-## Getting Started
+## dependencies
 
 To use the tools provided in this repository, please ensure you have a Python environment set up with the necessary libraries installed. The primary dependencies include:
 
