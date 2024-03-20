@@ -3,7 +3,7 @@ import pandas as pd
 
 sh = win32com.client.gencache.EnsureDispatch('Shell.Application', 0)
 
-directory = r'C:\Users\Joel Neumann\OneDrive\Dokumente\Kamera\3\Images'
+directory = './path/to/directory'
 ns = sh.NameSpace(directory)
 
 columns = []
@@ -31,25 +31,18 @@ with open(file_path, 'w', encoding='utf-8') as file:
         item_count += 1
         print(f"Verarbeitet: {item_count} Elemente")
 
-print("Fertig! Alle Daten wurden verarbeitet.")
+print(f"Fertig! Alle Daten wurden verarbeitet.")
 
-"""
+
+import pandas as pd
+
 file_path = 'data.txt'
 data = pd.read_csv(file_path, usecols=[1, 5], delimiter=',', encoding='utf-8', header=None)
 
 data.columns = ['ImageName', 'Date and time']
 
-# Laden der Daten mit Pandas
-data = pd.read_csv(file_path, delimiter=',', encoding='utf-8', header=None)
-data.columns = columns  # Verwenden der zuvor gesammelten Spaltennamen
+filtered_data = data[data['ImageName'].str.contains('IMG')]
 
-# Angenommen, die Image-Namen sind in der ersten Spalte (Index 0) nach Ihrem Code
-filtered_data = data[data[columns[0]].str.contains('IMG')]
-
-# Ausgeben der gefilterten Daten
-print(filtered_data)
-
-value_file = 'value.txt'
-# Speichern der gefilterten Daten in 'value.txt', ohne Index, mit UTF-8 Kodierung
-filtered_data.to_csv(value_file, index=False, encoding='utf-8')
-"""
+valuefile = 'value.txt'
+filtered_data.to_csv(valuefile, index=False, header=True)
+print(len(filtered_data))
