@@ -60,9 +60,12 @@ for file_name in image_files:
     counter += 1
     time_left = np.mean(delta_times) * (len(image_files) - counter)
     if time_left > 60:
-        print(f'Done: {counter}, after: {delta:.2f} seconds \n left: {len(image_files) - counter} \n estimated time left: {time_left / 60:.2f} minutes.')
+        if delta > 60:
+            print(f'Done: {counter}, after: {delta / 60:.2f} minutes \nleft: {len(image_files) - counter} \nestimated time left: {time_left / 60:.2f} minutes.')
+        else:
+            print(f'Done: {counter}, after: {delta:.2f} seconds \nleft: {len(image_files) - counter} \nestimated time left: {time_left / 60:.2f} minutes.')
     else:
-        print(f'Done: {counter} \n left: {len(image_files) - counter} \n estimated time left: {time_left:.2f} seconds.')
+        print(f'Done: {counter} \nleft: {len(image_files) - counter} \nestimated time left: {time_left:.2f} seconds.')
 
         
     print('Saving Results...')
