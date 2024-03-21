@@ -15,7 +15,7 @@ from time import perf_counter, time
 # potential_radii ist ein array mit potentiellen Radien für die Kugel in Pixeln
 # Die Datei Kugel.txt sollte im selben Ordner wie das Programm liegen
 input_folder = "originalbilder"
-output_file_name = "kugelmitte.txt"
+output_file_name = "kugelmitte1.txt"
 low = 0.5
 high = 0.6
 r_min = 240
@@ -23,8 +23,8 @@ r_max = 260
 potential_radii = np.linspace(r_min, r_max, 11)
 
 image_files = sorted(os.listdir(input_folder))  # Ensure the files are sorted
-#start_index = image_files.index('IMG_5201.png')  # Find the index of the starting file
-#image_files = image_files[start_index:]  # Adjust the list to start from the found index
+start_index = image_files.index('IMG_5069.png')  # Find the index of the starting file
+image_files = image_files[start_index:]  # Adjust the list to start from the found index
 delta_times = []
 counter = 0
 
@@ -69,7 +69,7 @@ for file_name in image_files:
 
         
     print('Saving Results...')
-    im.imsave(f'hough/{file_name}', arr=hough[index][0, 0])
+    im.imsave(f'hough1/{file_name}', arr=hough[index][0, 0])
 
     with open(output_file_name, "a") as f:
         f.write(f'{file_name} {cx[0]} {cy[0]} {r[0]} {r_min} {r_max} \n')
