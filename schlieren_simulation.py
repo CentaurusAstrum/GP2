@@ -5,15 +5,12 @@ from pathlib import Path
 matplotlib.rcParams['figure.figsize'] = [10, 10]
 
 
-image_input_folder = 'originalbilder'
-input_file = 'kugelmitte.txt'
+image_input_folder = 'simulation_images'
 
-plot_output_folder = 'schlieren_width'
-width_output_file = 'schlieren_width.txt'
+plot_output_folder = 'simulation_schlieren_width'
+width_output_file = 'simulation_schlieren_width.txt'
 
 possible_radii = 100
-clip_width = 500
-clip_height = 1000
 
 
 def circle_mean(arr: np.ndarray, x_center: int, y_center: int, r: float, sections=(0, 1, 2, 3, 4, 5, 6, 7)) -> float:
@@ -87,21 +84,20 @@ def circle_mean(arr: np.ndarray, x_center: int, y_center: int, r: float, section
     return total / pixel_count
 
 
-config = np.genfromtxt('kugelmitte.txt', dtype=None, delimiter=' ', skip_header=1, encoding='utf-8')
-
 with open(width_output_file, 'w') as f:
     f.write('file schlieren_width\n')
 
 Path(f'./{plot_output_folder}').mkdir(exist_ok=True)
 
-for i, sample in enumerate(config):
-    filename = sample[0]
+for i in range(500):
+    print(f'Processing Frame      {i+1}')
+    filename = f'frame{i+1}.png'
     image = plt.imread(f'{image_input_folder}/{filename}')
     greyscale = 0.299 * image[:, :, 0] + 0.587 * image[:, :, 1] + 0.114 * image[:, :, 2]
 
-    x_center = sample[1]
-    y_center = sample[2]
-    r = sample[3]
+    x_center = 640
+    y_center = 360
+    r = 60
 
     out = np.zeros(possible_radii)
     for j, r_j in enumerate(np.linspace(r, r + possible_radii, num=possible_radii)):
@@ -111,9 +107,9 @@ for i, sample in enumerate(config):
 
     plt.figure()
     ax = plt.subplot(1, 2, 1)
-    plt.imshow(greyscale[y_center - clip_height:y_center + clip_height, x_center - clip_width:x_center + clip_width],
+    plt.imshow(greyscale,
                cmap='gray')
-    ax.add_patch(plt.Circle((clip_width, clip_height), r + schlieren_width, color='red', fill=False))
+    ax.add_patch(plt.Circle((x_center, y_center), r + schlieren_width, color='red', fill=False))
 
     plt.subplot(1, 2, 2)
     plt.plot(np.linspace(r, r + possible_radii, num=possible_radii), out)
